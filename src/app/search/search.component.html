@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-lg-12 jumbotron mb-3">
+            <div class="display-1">
+                <div class="text-white ">Find Car
+                </div>
+                <form id="menulist">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons">
+                                    local_movies
+                                </i>
+
+                            </span>
+
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search your favourite car"
+                            (input)="onSearchText($event)">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

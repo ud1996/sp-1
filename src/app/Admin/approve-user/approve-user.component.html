@@ -1,0 +1,41 @@
+<div class="container" >
+    <div class="row justify-content-center">
+        <div class="card-body col-lg-12">
+            <div class="card-header">Pending users</div>
+            <table class="table" >
+                <thead>
+                    <tr>
+                       
+                        <th scope="col">E-mail</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let user of users">
+                    <tr>
+                       
+                        <td>{{user.email}}</td>
+                        <td>{{user.firstName}}</td>
+                        <td>{{user.lastName}}</td>
+                        
+                        <td>
+                            <button class="btn btn-primary" (click)="onApproving(user.userId)">Approve</button> 
+                            <button class="btn btn-danger ml-2" (click)="onDeclining(user.userId)">Decline</button>   
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #emptyItem>
+
+    <div class=" container justify-content-center">
+        <div class="card mt-5 justify-content-center">
+                <h4 class="justify-content-center ml-10">No Pending Users to Approve</h4>
+        </div>
+        
+    </div>
+
+</ng-template>

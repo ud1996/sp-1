@@ -1,0 +1,49 @@
+<div class="card col-lg-12 mt-4">
+<img class="card-img-top" [src]='booking.vehicle.imageUrl' [alt]="booking.vehicle.name">
+
+<div class="card-body">
+    <div class="row">
+        <h4 class="card-title col-6">{{booking.vehicle.name}}</h4>
+        <label class="col-6 text-right text-maroon font-size-20">
+            <h5>Per Day Charges: </h5>${{booking.vehicle.price}}</label>
+    </div>
+
+    <div class="card-text">
+        <div class="row">
+            <div class="col-6">
+                <h6>Car Type: {{booking.vehicle.type}}</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                 Start Date : {{booking.startDate}}
+            </div>
+            <div class="col-6">
+                End Date : {{booking.endDate}}
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-6">
+             Booking Date : {{booking.bookingDate}}
+         </div>
+         <div class="col-6">
+                <div class="badge badge-info">{{booking.status}}</div>
+              
+             </div>    
+         </div>
+         <div class="row">
+             <div class="col-6">
+                 <h5>Total Bill : {{booking.vehicle.price}}*({{booking.endDate}}-{{booking.startDate}})
+                 </h5>
+             </div>
+         </div>
+
+         <div class="col-6">
+             <button class="btn btn-primary taxt-white" (click)="deleteBooking(booking.bookingId)">
+                 <i class="material-icons">delete</i>
+                 <label id="book">Delete Booking</label>
+             </button>
+         </div>
+    </div>
+</div>
+</div>

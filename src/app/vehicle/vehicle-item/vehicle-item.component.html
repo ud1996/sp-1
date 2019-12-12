@@ -1,0 +1,44 @@
+
+<div class="container-fluid mt-3">
+    <div class="card">
+        <div class="row">
+            <div class="col-6">
+                <img class="card-img-top" [src]='vehicle.imageUrl' [alt]="vehicle.veName">
+            </div>
+            <div class="col-6 ">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <h4 class="card-title col-6">{{vehicle.veName}}</h4>
+                        <label class="col-6 text-right text-maroon font-size-20">
+                            <h5>Per Day Charges:</h5>${{vehicle.price}}
+                        </label>
+                    </div>
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-6">
+                                <h5>Car Type: {{vehicle.veType}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row alignment">
+                            <div class="row mt-4">
+                                    <div class="col-6 d-flex justify-content-start" *ngIf="isAdmin()">
+                                        <a [routerLink]="['/edit',vehicle.veId]" class="btn btn-dark text-white">
+                                            <i class="material-icons">edit</i>
+                                            <label id="edit">Edit</label>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end" *ngIf="!isAdmin()">
+                                        <a [routerLink]="['/confirm',vehicle.veId]"  class="btn btn-dark text-white">
+                                            <i class="material-icons">directions_car</i>
+                                            <label id="book">Book</label>
+                                        </a>
+                                    </div>
+                                </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
