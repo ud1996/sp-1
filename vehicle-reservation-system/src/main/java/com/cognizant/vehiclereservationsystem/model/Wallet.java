@@ -35,6 +35,14 @@ public class Wallet {
 		this.amount = amount;
 	}
 	
+	
+
+	public Wallet(double amount, User user) {
+		super();
+		this.amount = amount;
+		this.user = user;
+	}
+
 	public long getWalletId() {
 		return walletId;
 	}

@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from './site/signup/signup.component';
 import { LoginComponent } from './site/login/login.component';
 import { ApproveUserComponent } from './admin/approve-user/approve-user.component';
-import { VehicleItemComponent } from './vehicle/vehicle-item/vehicle-item.component';
 import { VehicleEditComponent } from './vehicle/vehicle-edit/vehicle-edit.component';
 import { VehicleListComponent } from './vehicle/vehicle-list/vehicle-list.component';
 import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booking.component';
+import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
 
 
 const routes: Routes = [
@@ -15,7 +15,8 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'userapprove', component:ApproveUserComponent},
   {path:'edit/:veId',component:VehicleEditComponent},
-  {path:'confirm/:veId',component:ConfirmBookingComponent}
+  {path:'confirm/:veId',component:ConfirmBookingComponent},
+  {path:'addVehicle',component:AddVehicleComponent}
 ];
 
 @NgModule({

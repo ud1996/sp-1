@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { Vehicle } from 'src/app/Model/vehicle.model';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { Router } from '@angular/router';
+import { VehicleService } from 'src/app/Services/vehicle.service';
 
 @Component({
   selector: 'app-vehicle-item',
@@ -11,8 +12,8 @@ import { Router } from '@angular/router';
 export class VehicleItemComponent implements OnInit {
 
   @Input() vehicle: Vehicle[];
-
-  constructor(private authService: AuthenticationService, private router:Router) { }
+  bookedVehicle:Vehicle;
+  constructor(private authService: AuthenticationService, private router:Router,private vehicleService:VehicleService) { }
 
   ngOnInit() {
 
@@ -28,5 +29,6 @@ export class VehicleItemComponent implements OnInit {
     
     return this.authService.loggedIn && this.authService.isAdminUser();
   }
+
 
 }

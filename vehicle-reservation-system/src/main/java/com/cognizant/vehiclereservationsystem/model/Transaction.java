@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="transaction")
 public class Transaction {
@@ -27,14 +29,17 @@ public class Transaction {
 	
 	@ManyToOne
 	@JoinColumn(name="tr_us_id")
+	@JsonIgnore
 	User user;
 	
 	@ManyToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="tr_cp_id")
+	@JsonIgnore
 	Coupon coupon;
 	
 	@ManyToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="tr_bk_id")
+	@JsonIgnore
 	Booking booking;
 
 	public Transaction() {
@@ -48,6 +53,18 @@ public class Transaction {
 		this.type = type;
 		this.amount = amount;
 	}
+	
+
+	public Transaction( Booking booking,User user,String type, double amount,  Coupon coupon) {
+		super();
+		this.type = type;
+		this.amount = amount;
+		this.user = user;
+		this.coupon = coupon;
+		this.booking = booking;
+	}
+
+	
 
 	public long getTransaction_id() {
 		return transaction_id;

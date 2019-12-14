@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					httpSecurity.cors();
 					httpSecurity.csrf().disable().httpBasic().and().authorizeRequests()
 					.antMatchers("/authenticate").permitAll().antMatchers("/user/**").permitAll()
-					.antMatchers("/admin/**").hasRole("ADMIN")
+					.antMatchers("/admin/**").permitAll()
+					
 					.antMatchers("/vehicle/**").permitAll()
 					.anyRequest().authenticated()
 					.and().addFilter(new JwtAuthorizationFilter(authenticationManager())); 

@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="user")
 public class User {
@@ -57,18 +59,28 @@ public class User {
 	Set<Role>roleList;
 	
 	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+	@JsonIgnore
 	Wallet wallet;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@JsonIgnore
 	Set<Transaction> transaction;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	@JsonIgnore
 	Set<Booking> booking;
 	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public User(String email) {
+		super();
+		this.email = email;
+	}
+	
 
 	public User(long userId, String firstName, String lastName, String email, String password, long vendorId, int age,
 			String gender, long contactNumber, boolean isApproved) {

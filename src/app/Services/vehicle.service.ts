@@ -37,15 +37,16 @@ export class VehicleService{
         let headers = new HttpHeaders();
         headers = headers.set('Authorization','Bearer '+this.token);
 
-        return this.httpClient.post<void>(`http://localhost:8000/vehicle/${vehicle}`,{headers});
+        return this.httpClient.post<void>(`http://localhost:8000/vehicle`,vehicle,{headers});
     }
 
     updateVehicle(vehicle:Vehicle):Observable<any>{
         this.token = this.authenticationService.accessToken;
         let headers = new HttpHeaders();
+        //headers.set('Access-Control-Allow-Origin', 'http://localhost:4200');
         headers = headers.set('Authorization','Bearer '+this.token);
         console.log(vehicle);
-        return this.httpClient.put<void>(`http://localhost:8000/vehicle/${vehicle}`,{headers});
+        return this.httpClient.put<void>(`http://localhost:8000/vehicle`,vehicle,{headers});
     }
 
     deleteVehicle(vehicle:Vehicle):Observable<any>{
@@ -54,7 +55,7 @@ export class VehicleService{
         headers = headers.set('Authorization','Bearer '+this.token);
        
         
-        return this.httpClient.delete<void>(`http://localhost:8000/vehicle/${vehicle}`,{headers});
+        return this.httpClient.delete<void>(`http://localhost:8000/vehicle`,{headers});
     }
 
 

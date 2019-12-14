@@ -13,8 +13,5 @@ public class VehicleReservationSystemApplication implements WebMvcConfigurer{
 		SpringApplication.run(VehicleReservationSystemApplication.class, args);
 	}
 
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedMethods("*").allowedOrigins("*");
-	}
+	
 }

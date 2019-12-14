@@ -1,1 +1,111 @@
-<p>confirm-booking works!</p>
+<div class="row mt-5 ">
+    <div class="col-4 justify-content-center">
+
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="container">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        CHECKOUT
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4 col-md-8 col-sm-10">
+                                    <h4>Booking Fee</h4>
+                                </div>
+                                <div class="col-3 col-sm-2 col-md-4 float-right">
+                                    5000
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4 col-md-8 col-sm-10">
+                                    <h4>Promotional Code</h4>
+                                </div>
+                                <input type="text" name="promocode">
+                            </div>
+
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4 col-md-8 col-sm-10">
+                                    <h4>Total Amount Payable</h4>
+                                </div>
+                                <div class="col-3 col-sm-2 col-md-4 float-right color-green">
+                                    5000
+                                </div>
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+            <button type="button ml-4" class="btn btn-success d-flex" (click)="confirmBooking()">Checkout</button>
+
+        </div>
+
+    </div>
+
+    <div class="col-4 col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-title">Summary</div>
+            <div class="card-header">
+                <img src="data:image/jpeg;base64,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"
+                    class="card-img-top">
+
+            </div>
+            <p class="card-text">Maruti</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <form [formGroup]="bookingForm" (submit)="confirmBooking()">
+                        <div class="row">
+                            <div class="col-6">
+                                Booking From
+                            </div>
+                            <div class="col-6 float-right">
+
+                                <input type="date" id="bookingFrom" date-format="yyyy/mm/dd" class="form-control"
+                                    formControlName="bookingFrom">
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6">
+                                Booking for days
+                            </div>
+                            <div class="col-6 float-right">
+                                <input type="text" class="form-control" formControlName="bookingUpto" id="daysBooked">
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-success d-flex" id="save" value="confirm">
+                    </form>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-8">
+                            Total Price
+                        </div>
+
+                        <div class="col-4 float-right">
+                            5000
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open
+                Modal</button>
+        </div>
+
+
+    </div>
+</div>

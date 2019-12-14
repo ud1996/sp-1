@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="booking")
 public class Booking {
@@ -37,12 +39,15 @@ public class Booking {
 	
 	@ManyToOne(cascade={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="bk_ve_id")
+	@JsonIgnore
 	private Vehicle vehicle;
 	
 	@ManyToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="bk_us_id")
+	@JsonIgnore
 	private User user;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="booking",cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	private Set<Transaction> transaction;
 
@@ -58,6 +63,20 @@ public class Booking {
 		this.endDate = endDate;
 		this.bookingDate = bookingDate;
 		this.status = status;
+	}
+	
+	
+	
+
+	public Booking(User user,Vehicle vehicle,LocalDate startDate, LocalDate endDate, LocalDate bookingDate, String status ) {
+		
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.bookingDate = bookingDate;
+		this.status = status;
+		this.vehicle = vehicle;
+		this.user = user;
+		
 	}
 
 	public long getBookingId() {

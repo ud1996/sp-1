@@ -3,7 +3,7 @@ import { Vehicle } from 'src/app/Model/vehicle.model';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { VehicleService } from 'src/app/Services/vehicle.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import {map,switchMap} from 'rxjs/operators';
 
 @Component({
@@ -16,22 +16,19 @@ export class VehicleEditComponent implements OnInit {
  vehicleId:any;
  updatedVehicle:Vehicle;
  vehicle:Vehicle;
- editForm:FormGroup;
+ editForm = this.formBuilder.group({
+  'imageUrl':new FormControl(null,Validators.required),
+  'veName': new FormControl(null, Validators.required),
+  'price': new FormControl(null, [Validators.min(0)]),
+  'veType': new FormControl(null, Validators.required),
+  'veInsuranceExpiryDate':new FormControl(null,Validators.required),
+  'velastServiceDate':new FormControl(null,Validators.required),
+  'veServiceDueDate':new FormControl(null,Validators.required),
+  'veAvailability':new FormControl(null)
+});
  formSubmitted: boolean = false;
-  constructor(private vehicleService: VehicleService,private route:ActivatedRoute,private authService: AuthenticationService, private router:Router) { }
+  constructor(private formBuilder: FormBuilder, private vehicleService: VehicleService,private route:ActivatedRoute,private authService: AuthenticationService, private router:Router) { 
 
-  ngOnInit() {
-
-    // this.route.params.subscribe((params:Params)=>{
-    //   this.vehicleId = params['veId'];
-    //   console.log(this.vehicleId)
-    // });
-
-    // this.vehicleService.getVehicle(this.vehicleId).subscribe((v:Vehicle)=>{
-    //       this.vehicle = v;
-    //       console.log("EditVehicle"+v.imageUrl);
-          
-    // })
     this.route.params.pipe(
       map(params=> params['veId']),
       switchMap(ve=>this.vehicleService.getVehicle(ve))
@@ -41,16 +38,7 @@ export class VehicleEditComponent implements OnInit {
       
       this.vehicle = v;
       console.log("EditVehicle"+v.imageUrl);
-      this.editForm = new FormGroup({
-        'imageUrl':new FormControl(null,Validators.required),
-        'veName': new FormControl(null, Validators.required),
-        'price': new FormControl(null, [Validators.min(0)]),
-        'veType': new FormControl(null, Validators.required),
-        'veInsuranceExpiryDate':new FormControl(null,Validators.required),
-        'velastServiceDate':new FormControl(null,Validators.required),
-        'veServiceDueDate':new FormControl(null,Validators.required),
-        'veAvailability':new FormControl(null)
-      });
+     
       
      if(this.vehicle){
        console.log(this.vehicle);
@@ -84,6 +72,21 @@ export class VehicleEditComponent implements OnInit {
     console.log(this.vehicle);
     
 
+  }
+
+  ngOnInit() {
+
+    // this.route.params.subscribe((params:Params)=>{
+    //   this.vehicleId = params['veId'];
+    //   console.log(this.vehicleId)
+    // });
+
+    // this.vehicleService.getVehicle(this.vehicleId).subscribe((v:Vehicle)=>{
+    //       this.vehicle = v;
+    //       console.log("EditVehicle"+v.imageUrl);
+          
+    // })
+   
       
   }
 
@@ -98,7 +101,7 @@ export class VehicleEditComponent implements OnInit {
     let velastServiceDate=this.editForm.get('velastServiceDate').value;
     let veServiceDueDate=this.editForm.get('veServiceDueDate').value;
 
-     this.updatedVehicle = {veId:veId,price:price,veType:veType,veInsuranceExpiryDate:veInsuranceExpiryDate,velastServiceDate:velastServiceDate,veName:veName,imageUrl:imageUrl,veServiceDueDate:veServiceDueDate,veAvailability:"avaialable"}
+     this.updatedVehicle = {veId:veId,veName:veName,veType:veType,veInsuranceExpiryDate:veInsuranceExpiryDate,velastServiceDate:velastServiceDate,veServiceDueDate:veServiceDueDate,veAvailability:"avaialable",price:price,imageUrl:imageUrl}
 
     this.vehicleService.updateVehicle(this.updatedVehicle).subscribe();
     this.editForm.reset();

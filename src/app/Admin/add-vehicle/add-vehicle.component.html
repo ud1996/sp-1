@@ -2,21 +2,21 @@
     <div class="row justify-content-center">
         <div class="card">
             <div class="card-body">
-                <div class="alert alert-success" *ngIf="formSubmitted">Successfully Submitted</div>
+                <div class="alert alert-success" *ngIf="formSubmitted">Successfully Added</div>
                 <div *ngIf="formSubmitted">
                     <a [routerLink]="['/']" class="btn btn-primary">Vehicle</a>     
                 </div>
 
-                <form [formGroup]="editForm" (submit)="onEditForm()" *ngIf="!formSubmitted">
-                    <h2>Edit Vehicle</h2>
+                <form [formGroup]="addVehicleForm" (submit)="onAddVehicle()" *ngIf="!formSubmitted">
+                    <h2>Add Vehicle</h2>
 
                     <div class="row">
                         <div class="form-group col-12 mt-3">
                             <label for="image">Image Link</label>
-                            <input type="text" id="image" class="form-control" formControlName="imageUrl"
-                                [value]="imageUrl">
+                            <input type="text" id="image" class="form-control" formControlName="imageUrl">
+                                
                             <span class="validation-error"
-                                *ngIf="editForm.get('imageUrl').hasError('required') && editForm.get('imageUrl').touched">Vehicle
+                                *ngIf="addVehicleForm.get('imageUrl').hasError('required') && addVehicleForm.get('imageUrl').touched">Vehicle
                                 Image Link required</span>
                         </div>
                     </div>
@@ -24,29 +24,29 @@
                         <div class="form group col-6 mt-3">
                             <label for="name">Name</label>
                             <input type="text" id="veName" class="form-control" formControlName="veName"
-                                [value]="veName">
+                                >
                             <span class="validation-error"
-                                *ngIf="editForm.get('veName').hasError('required') && editForm.get('veName').touched">Vehicle
+                                *ngIf="addVehicleForm.get('veName').hasError('required') && addVehicleForm.get('veName').touched">Vehicle
                                 Name
                                 required</span>
                         </div>
                         <div class="form group col-6 mt-3">
                             <label for="price">Per Day Charges</label>
-                            <input type="text" id="price" class="form-control" formControlName="price" [value]="price">
+                            <input type="text" id="price" class="form-control" formControlName="price" >
                             <span class="validation-error"
-                                *ngIf="editForm.get('price').hasError('required') && editForm.get('price').touched">Per
+                                *ngIf="addVehicleForm.get('price').hasError('required') && addVehicleForm.get('price').touched">Per
                                 Day Charges
                                 required</span>
-                            <span class="validation-error" *ngIf="editForm.get('price').hasError('pattern')">Price
+                            <span class="validation-error" *ngIf="addVehicleForm.get('price').hasError('pattern')">Price
                                 contains only numeric values</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form group col-lg-6 mt-3">
                             <label for="image">Vehicle Type</label>
-                            <input type="text" id="type" class="form-control" formControlName="veType" [value]="veType">
+                            <input type="text" id="type" class="form-control" formControlName="veType" >
                             <span class="validation-error"
-                                *ngIf="editForm.get('veType').hasError('required') && editForm.get('veType').touched">Vehicle
+                                *ngIf="addVehicleForm.get('veType').hasError('required') && addVehicleForm.get('veType').touched">Vehicle
                                 Type
                                 required</span>
                         </div>
@@ -54,28 +54,28 @@
                         <div class="form group col-lg-6 mt-3">
                             <label for="date-picker-example">Insurance Expiry Date</label>
                             <input type="date" date-format="yyyy/mm/dd" class="form-control" id="datepicker"
-                                formControlName="veInsuranceExpiryDate" [value]="veInsuranceExpiryDate">
+                                formControlName="veInsuranceExpiryDate" >
                         </div>
                     </div>
                     <div class="row">
                         <div class="form group col-lg-6 mt-3">
                             <label for="date-picker-example">Last Service Date</label>
                             <input type="date" date-format="yyyy-mm-dd" class="form-control" id="datepicker"
-                                formControlName="velastServiceDate" (value)="velastServiceDate">
+                                formControlName="velastServiceDate" >
                         </div>
 
 
                         <div class="form group col-lg-6 mt-3">
                             <label for="date-picker-example">Service Due Date</label>
                             <input type="date" date-format="yyyy-mm-dd" class="form-control" id="datepicker"
-                                formControlName="veServiceDueDate" (value)="veServiceDueDate">
+                                formControlName="veServiceDueDate" >
                         </div>
                     </div>
 
 
                     <div class="row">
                         <div class="form group col-lg-12 mt-4">
-                            <input type="submit" [disabled]="editForm.invalid" class="btn btn-primary text-white"
+                            <input type="submit" class="btn btn-primary text-white"
                                 id="save" value="Save">
                         </div>
                     </div>

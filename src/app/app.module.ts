@@ -16,6 +16,8 @@ import { SearchComponent } from './search/search.component';
 import { BookingListComponent } from './booking/booking-list/booking-list.component';
 import { BookingInfoComponent } from './booking/booking-info/booking-info.component';
 import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booking.component';
+import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booki
     SearchComponent,
     BookingListComponent,
     BookingInfoComponent,
-    ConfirmBookingComponent
+    ConfirmBookingComponent,
+    AddVehicleComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booki
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
