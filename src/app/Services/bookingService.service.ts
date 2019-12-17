@@ -10,16 +10,17 @@ import { DatePipe } from '@angular/common';
 export class BookingService {
         credentials: string;
         accessToken: string = '';
+        totalAmount:any;
         constructor(private httpClient: HttpClient, private authService: AuthenticationService) { }
         getBookingList(email: string) {
                 let headers = new HttpHeaders();
                 headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
-                return this.httpClient.get(`http://localhost:8000/users/bookings/${email}`, { headers });
+                return this.httpClient.get(`http://localhost:8000/user/bookings/${email}`, { headers });
         }
-        confirmBooking(email: string, vehicleId: number, startDate: string, days: number) {
+        confirmBooking(email: string, vehicleId: number, startDate: Date, days: number) {
                 console.log("llll");
                 let headers = new HttpHeaders();
-
+               
                 headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
                 console.log("222");
                 console.log("http://localhost:8000/user/booking/" + email + "/" + vehicleId + "/" + startDate + "/" + days);

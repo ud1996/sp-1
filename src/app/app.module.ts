@@ -18,6 +18,8 @@ import { BookingInfoComponent } from './booking/booking-info/booking-info.compon
 import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booking.component';
 import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
 import { DatePipe } from '@angular/common';
+import { WalletComponent } from './wallet/wallet.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { DatePipe } from '@angular/common';
     BookingListComponent,
     BookingInfoComponent,
     ConfirmBookingComponent,
-    AddVehicleComponent
+    AddVehicleComponent,
+    WalletComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

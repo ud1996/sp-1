@@ -39,7 +39,6 @@ public class Booking {
 	
 	@ManyToOne(cascade={CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
 	@JoinColumn(name="bk_ve_id")
-	@JsonIgnore
 	private Vehicle vehicle;
 	
 	@ManyToOne(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})

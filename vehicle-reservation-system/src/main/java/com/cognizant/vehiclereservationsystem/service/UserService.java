@@ -22,6 +22,7 @@ import com.cognizant.vehiclereservationsystem.repository.BookingRepository;
 import com.cognizant.vehiclereservationsystem.repository.TransactionRepository;
 import com.cognizant.vehiclereservationsystem.repository.UserRepository;
 import com.cognizant.vehiclereservationsystem.repository.VehicleRepository;
+import com.cognizant.vehiclereservationsystem.repository.WalletRepository;
 
 @Service
 public class UserService {
@@ -38,14 +39,22 @@ public class UserService {
 	@Autowired
 	VehicleRepository vehicleRepository;
 	
+	@Autowired
+	WalletRepository walletRepository;
+	
 	@Transactional
 	public List<User> getpendingUsers(){
 		return userRepository.getPending();
 	}
 	
 	@Transactional
-	public User getUser(long id) {
-		return userRepository.findById(id).get();
+	public List<User> getApprovedUser(){
+		return userRepository.getApproved();
+	}
+	
+	@Transactional
+	public User getUser(String email) {
+		return userRepository.findByEmail(email);
 	}
 	
 	@Transactional
@@ -116,10 +125,6 @@ public class UserService {
 		return wallet;
 	}
 
-	private User getUser(String email) {
-		// TODO Auto-generated method stub
-		return userRepository.findByEmail(email);
-	}
 	
 	
 
@@ -251,7 +256,20 @@ public class UserService {
 		return null;
 	}
 	
+	@Transactional
+	public Wallet getWalletByEmail(String email){
+		User user = getUser(email);
+		return user.getWallet();
+	}
 	
+	public void updateWalletBalance(String email,double amount) {
+		User user = userRepository.findByEmail(email);
+		Wallet wallet = user.getWallet();
+		wallet.setAmount(wallet.getAmount()+amount);
+		user.setWallet(wallet);
+		userRepository.save(user);
+		walletRepository.save(wallet);
+	}
 
 	
 }

@@ -1,50 +1,126 @@
-
-<div class="container-fluid mt-3">
+<!-- <div class="container-fluid mt-3">
     <div class="card">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12">
                 <img class="card-img-top" [src]='vehicle.imageUrl' [alt]="vehicle.veName">
             </div>
-            
-                <div class="card-body col-lg-4 col-md-6 col-lg-12">
+
+            <div class="card-body col-lg-4 col-md-6 col-lg-12">
+                <div class="row">
                     <div class="row justify-content-center ">
-                        <h4 class="card-title col-8">{{vehicle.veName}}</h4>
-                        <label class=" text-right text-maroon font-size-20 col-4">
+                        <h4 class="card-title col-8 col-md-6 col-sm-6">{{vehicle.veName}}</h4>
+                        <label class=" text-right text-maroon font-size-20 col-4 col-md-6 col-sm-6">
                             <h5>Per Day Charges:</h5>${{vehicle.price}}
                         </label>
                     </div>
+
                     <div class="card-text ml-5">
                         <div class="row">
-                            <div class="">
+                            <div class="col-4 col-md-6 col-sm-12">
                                 <h5>Car Type: {{vehicle.veType}}</h5>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                            <div class="row mt-4">
-                                    <div class="col-6 d-flex justify-content-start ml-5" *ngIf="isAdmin()">
-                                        <a [routerLink]="['/edit',vehicle.veId]" class="btn btn-dark text-white">
-                                            <i class="material-icons">edit</i>
-                                            <label id="edit">Edit</label>
-                                        </a>
-                                    </div>
-                                    <div class="col-6 d-flex justify-content-start ml-5" *ngIf="isAdmin()">
-                                        <a [routerLink]="['/addVehicle']" class="btn btn-dark text-white">
-                                            <i class="material-icons">Add Vehicle</i>
-                                            <label id="edit">Add Vehicle</label>
-                                        </a>
-                                    </div>
-                                    <div class="d-flex justify-content-end ml-5" *ngIf="!isAdmin()">
-                                        <a [routerLink]="['/confirm',vehicle.veId]"  class="btn btn-dark text-white">
-                                            <i class="material-icons">directions_car</i>
-                                            <label id="book">Book</label>
-                                        </a>
-                                    </div>
-                                </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="row mt-4">
+                        <div class="col-6 d-flex justify-content-start ml-5" *ngIf="isAdmin()">
+                            <a [routerLink]="['/edit',vehicle.veId]" class="btn btn-dark text-white">
+                                <i class="material-icons">edit</i>
+                                <label id="edit">Edit</label>
+                            </a>
+                        </div>
+                        <div class="col-6 d-flex justify-content-start ml-5" *ngIf="isAdmin()">
+                            <a [routerLink]="['/addVehicle']" class="btn btn-dark text-white">
+                                <i class="material-icons">Add Vehicle</i>
+                                <label id="add">Add Vehicle</label>
+                            </a>
+                        </div>
+                        <div class="d-flex justify-content-end ml-5" *ngIf="!isAdmin()">
+                            <a [routerLink]="['/confirm',vehicle.veId]" class="btn btn-dark text-white">
+                                <i class="material-icons">directions_car</i>
+                                <label id="book">Book</label>
+                            </a>
+                        </div>
                     </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div> -->
+
+<div class="container col-12 mt-3">
+    <div class="card">
+        <div class="row ">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <img class="card-img-top rounded" [src]='vehicle.imageUrl' [alt]="vehicle.veName">
+            </div>
+
+
+
+            <div class="card-body">
+
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Model</th>
+                            <td>{{vehicle.veName}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Insuarance Valid</th>
+                            <td>{{vehicle.veInsuranceExpiryDate | date}} </td>
+                        </tr>
+
+                        <tr>
+                            <th>Type</th>
+                            <td>{{vehicle.veType}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Last Service Date</th>
+                            <td>{{vehicle.velastServiceDate | date}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+                <div class="row col-12">
+                   
+                        <div class="col-6" *ngIf="isAdmin()">
+                            <a [routerLink]="['/edit',vehicle.veId]" class="btn btn-dark text-white">
+                                <i class="material-icons">edit</i>
+                                <label id="edit">Edit</label>
+                            </a>
+                        </div>
+                       
+                            <div class="col-6 ml-0" *ngIf="isAdmin()">
+                                <a [routerLink]="['/addVehicle']" class="btn btn-dark text-white">
+                                    <label id="add">Add Vehicle</label>
+                                </a>
+                            </div>
+                       
                     
                 </div>
-           
+
+                <div class="col-3 row mb-0">
+                   
+                        <div class="col-7">
+                            <div class="flex justify-content-end ml-0 float-left" *ngIf="!isAdmin()">
+                                <a [routerLink]="['/confirm',vehicle.veId]" class="btn btn-dark text-white">
+                                    <i class="material-icons">directions_car</i>
+                                    <label id="book">Book</label>
+                                </a>
+                            </div>
+                        </div>
+                   
+                </div>
+            </div>
         </div>
     </div>
 </div>

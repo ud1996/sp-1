@@ -59,11 +59,9 @@ public class User {
 	Set<Role>roleList;
 	
 	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
-	@JsonIgnore
 	Wallet wallet;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
-	@JsonIgnore
 	Set<Transaction> transaction;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)

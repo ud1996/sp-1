@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="wallet")
 public class Wallet {
@@ -19,7 +21,7 @@ public class Wallet {
 	
 	@Column(name="wa_amount")
 	double amount;
-	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="wa_us_id")
 	User user;

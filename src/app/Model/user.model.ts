@@ -1,3 +1,6 @@
+import { Wallet } from './wallet.model';
+import { Transaction } from './transaction.model';
+
 export interface User{
     userId?:number;
     email:string;
@@ -9,5 +12,7 @@ export interface User{
     isApproved?:boolean;
     age?:number;
     contactNumber?:number;
+    wallet ?: Wallet;
+    transaction ?:Transaction;
     accessToken?:string;
 }

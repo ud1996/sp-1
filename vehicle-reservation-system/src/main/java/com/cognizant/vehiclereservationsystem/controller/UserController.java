@@ -23,6 +23,7 @@ import com.cognizant.vehiclereservationsystem.Exception.UserAlreadyExistsExcepti
 import com.cognizant.vehiclereservationsystem.model.Booking;
 import com.cognizant.vehiclereservationsystem.model.Transaction;
 import com.cognizant.vehiclereservationsystem.model.User;
+import com.cognizant.vehiclereservationsystem.model.Wallet;
 import com.cognizant.vehiclereservationsystem.service.AppUserDetailService;
 import com.cognizant.vehiclereservationsystem.service.UserService;
 
@@ -42,14 +43,19 @@ public class UserController {
 		appUserDetailService.signUp(user);
 	}
 	
+	@GetMapping("/approvedUser")
+	public List<User> getApprovedUser(){
+		return userService.getApprovedUser();
+	}
+	
 	@GetMapping
 	public List<User>getPendingUser(){
 		return userService.getPending();
 	}
 	
-	@GetMapping("/getUser")
-	public User getUser(long id){
-		return userService.getUser(id);
+	@GetMapping("/getUser/{email}")
+	public User getUser(@PathVariable String email){
+		return userService.getUser(email);
 	}
 	
 	@GetMapping("/booking/{email}")
@@ -73,7 +79,7 @@ public class UserController {
 	}
 
 	@PostMapping("/booking/{email}/{vehicleId}/{startDate}/{days}")
-	public Map<String, String> bookVehicle(@PathVariable String email,@PathVariable @DateTimeFormat(pattern="dd-MM-yyyy") LocalDate startDate , @PathVariable long vehicleId,
+	public Map<String, String> bookVehicle(@PathVariable String email,@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate startDate , @PathVariable long vehicleId,
 			@PathVariable int days) {
 		return userService.bookVehicle(email, vehicleId, startDate,days);
 	}
@@ -83,6 +89,15 @@ public class UserController {
 		return userService.cancelBooking(bookingId);
 	}
 	
+	@GetMapping("/wallet/{email}")
+	public Wallet getWalletByEmail(@PathVariable String email) {
+		return userService.getWalletByEmail(email); 
+	}
 	
+	@PostMapping("/wallet/{email}/{amount}")
+	public void updateWalletBalance(@PathVariable String email,@PathVariable double amount) {
+		
+		userService.updateWalletBalance(email, amount);
+	}
 	
 }

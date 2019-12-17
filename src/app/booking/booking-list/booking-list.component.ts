@@ -16,8 +16,10 @@ export class BookingListComponent implements OnInit {
   constructor(private authenticationService:AuthenticationService,private bookingService:BookingService) { }
 
   ngOnInit() {
-      this.bookingService.getBookingList(this.authenticationService.userAuthenticated.email).subscribe((book:Booking[])=>{
-
+      console.log("pppp");
+      
+        this.bookingService.getBookingList(this.authenticationService.userAuthenticated.email).subscribe((book:Booking[])=>{
+          
         this.bookings = [...book];
         console.log(book);
         

@@ -1,0 +1,95 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-5">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">Zoomit Wallet</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Wallet Balance</th>
+                                    <td>
+                                        {{user.wallet.amount}}
+                                    </td>
+                                </tr>
+        
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Money</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-7">
+            <div class="card">
+                <div class="card-body col-lg-12">
+                    <div class="card-header">Transactions</div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+        
+                                <th scope="col">Transaction Id</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Transaction Type</th>
+        
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let transaction of user.transaction">
+                            <tr>
+        
+                                <td>{{transaction.transaction_id}}</td>
+                                <td>{{transaction.amount}}</td>
+        
+                                <td><span class="badge"
+                                        [ngClass]="{'badge-success': transaction.type==='credit', 'badge-danger' : transaction.type==='debit'}">{{transaction.type}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    Amount: 
+                                </div>
+                                <div class="col-6">
+                                    <form>
+                                        <input type="text" name="amount" id="amount" [(ngModel)]="amount">
+                                    </form>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" (click)="addMoney()">pay</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>

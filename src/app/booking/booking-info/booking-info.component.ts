@@ -14,6 +14,10 @@ export class BookingInfoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    console.log(this.booking);
+    
+    
   }
 
 }

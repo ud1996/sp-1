@@ -1,0 +1,30 @@
+<div class="container mt-8">
+    <div class="row justify-content-center">
+        <div class="card-body col-lg-12">
+            <div class="card-header">Transactions</div>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th scope="col">Transaction Id</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Transaction Type</th>
+
+                    </tr>
+                </thead>
+                <tbody *ngFor="let transaction of user.transaction">
+                    <tr>
+
+                        <td>{{transaction.transaction_id}}</td>
+                        <td>{{transaction.amount}}</td>
+
+                        <td><span class="badge"
+                                [ngClass]="{'badge-success': transaction.type==='credit', 'badge-danger' : transaction.type==='debit'}">{{transaction.type}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        <p>wallet:{{user.wallet.amount}}</p>
+        </div>
+    </div>
+</div>

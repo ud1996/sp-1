@@ -31,9 +31,22 @@ export class UserService{
        
     }
 
-    getUser():Observable<any>{
-        return this.httpClient.get<any>("http://localhost:8000/user");
+    getUser(email:string):Observable<any>{
+        this.token = this.authService.accessToken;
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization','Bearer '+this.token);
+        console.log("http://localhost:8000/user/getUser/"+email);
+        return this.httpClient.get<any>(`http://localhost:8000/user/getUser/${email}`);
     }
+
+    getWallet(email:string):Observable<any>{
+        this.token = this.authService.accessToken;
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization','Bearer '+this.token);
+        console.log("http://localhost:8000/user/getUser/"+email);
+        return this.httpClient.get<any>(`http://localhost:8000/user/wallet/${email}`);
+    }
+
 
     approveUser(id:number):Observable<any>{
         this.token = this.authService.accessToken;
@@ -50,5 +63,20 @@ export class UserService{
         headers = headers.set('Authorization','Bearer '+this.token);
         console.log("in servoce of user"+id);
        return this.httpClient.delete<void>(`http://localhost:8000/admin/declineUser/${id}`,{ headers });
+    }
+
+    getApprovedUsers(){
+        this.token = this.authService.accessToken;
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization','Bearer '+this.token);
+        return this.httpClient.get<any>(`http://localhost:8000/user/approvedUser/`,{ headers });
+    }
+
+    updateWalletBalance(email:string,amount:number):Observable<any>{
+
+        this.token = this.authService.accessToken;
+        let headers = new HttpHeaders();
+        headers = headers.set('Authorization','Bearer '+this.token);
+        return this.httpClient.post<any>(`http://localhost:8000/user/wallet/${email}/${amount}`,{ headers });
     }
 }

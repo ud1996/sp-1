@@ -11,7 +11,7 @@ import { UserService } from 'src/app/Services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user:User;
+  user:User=null;
   error:string;
   
   
@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   isLoginValid:boolean=true;
   ngOnInit() {
   }
+
+ 
 
   onSubmit(form:NgForm){
     const username = form.value.uname;
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit {
     this.authService.authenticate(username,password).subscribe(data=>{
         this.authService.accessToken = data['token'];
         this.authService.role = data['role'];
+        
         console.log("role"+this.authService.role);
         
         if(this.authService.role !== 'ROLE_ADMIN'){

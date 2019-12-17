@@ -1,12 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { BookingService } from 'src/app/Services/bookingService.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Vehicle } from 'src/app/Model/vehicle.model';
 import { VehicleService } from 'src/app/Services/vehicle.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/Model/user.model';
 import { DatePipe, getLocaleDayNames } from '@angular/common';
+import { Route } from '@angular/compiler/src/core';
 
 
 
@@ -18,17 +19,18 @@ import { DatePipe, getLocaleDayNames } from '@angular/common';
 })
 export class ConfirmBookingComponent implements OnInit {
   isData:boolean=false;
-  
+  totalAmount:number;
   vehicleId:number;
   name:string;
   imageUrl:string;
-  v:Vehicle;
+  v:Vehicle=null;
   startDate:Date;
   days:any;
   bookingForm:FormGroup;
   user:User;
   d:any;
-  constructor(private authService:AuthenticationService,private bookingService:BookingService,private  route:ActivatedRoute, private vehicleService:VehicleService,private datePipe: DatePipe) {
+  confirm:boolean = false;
+  constructor(private authService:AuthenticationService,private bookingService:BookingService,private  route:ActivatedRoute, private vehicleService:VehicleService,private datePipe: DatePipe,private rout:Router) {
 
     
   }
@@ -59,18 +61,24 @@ export class ConfirmBookingComponent implements OnInit {
     
   }
 
+  setTotalAmount(totalAmount:any){
+    this.bookingService.totalAmount = totalAmount;
+  }
+
   confirmBooking(){
     console.log("kk");
       this.user = this.authService.userAuthenticated;
       console.log(this.bookingForm.get('bookingFrom').value)
       this.startDate = this.bookingForm.get('bookingFrom').value;
-      
-      this.d = this.datePipe.transform(this.startDate,'dd-MM-yyyy');
-      console.log(this.d);
-      console.log(this.d.type);
-     
       this.days = this.bookingForm.get('bookingUpto').value;
-      this.bookingService.confirmBooking(this.user.email,this.vehicleId,this.d,this.days).subscribe();
+      this.totalAmount = this.v.price * this.days;
+      this.setTotalAmount(this.totalAmount);
+      this.bookingService.confirmBooking(this.user.email,this.vehicleId,this.startDate,this.days).subscribe();
+      this.rout.navigate(['/wallet']);
+  }
+
+  onConfirm(){
+    this.confirm = true;
   }
 
 }

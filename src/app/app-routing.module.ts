@@ -7,6 +7,9 @@ import { VehicleEditComponent } from './vehicle/vehicle-edit/vehicle-edit.compon
 import { VehicleListComponent } from './vehicle/vehicle-list/vehicle-list.component';
 import { ConfirmBookingComponent } from './booking/confirm-booking/confirm-booking.component';
 import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
+import { BookingListComponent } from './booking/booking-list/booking-list.component';
+import { WalletComponent } from './wallet/wallet.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 
 const routes: Routes = [
@@ -16,7 +19,10 @@ const routes: Routes = [
   {path:'userapprove', component:ApproveUserComponent},
   {path:'edit/:veId',component:VehicleEditComponent},
   {path:'confirm/:veId',component:ConfirmBookingComponent},
-  {path:'addVehicle',component:AddVehicleComponent}
+  {path:'addVehicle',component:AddVehicleComponent},
+  {path:'booking',component:BookingListComponent},
+  {path:'wallet',component:WalletComponent},
+  {path:'transactions',component:TransactionsComponent}
 ];
 
 @NgModule({

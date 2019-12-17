@@ -12,6 +12,7 @@ export class ApproveUserComponent implements OnInit {
 
   constructor(private userService:UserService,private authenticateService:AuthenticationService) { }
   users:User[];
+  approvedUser:User[];
   pendingUsers:User[];
   listSize:number;
   ngOnInit() {
@@ -19,6 +20,12 @@ export class ApproveUserComponent implements OnInit {
     this.userService.getAllUsers().subscribe((user:User[])=>{
       this.users = [...user];
       console.log("1"+this.users);
+      console.log("hi");
+    })
+
+    this.userService.getApprovedUsers().subscribe((user:User[])=>{
+      this.approvedUser = [...user];
+      console.log("1"+this.approvedUser);
       console.log("hi");
     })
    
@@ -61,5 +68,6 @@ onDeclining(userId:number){
    
 
   }
+
 
 }

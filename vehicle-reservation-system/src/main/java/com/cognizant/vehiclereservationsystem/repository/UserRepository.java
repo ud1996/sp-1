@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value="delete from user where user.userId = ?1",nativeQuery=true)
 	void declineUser(long id);
 	
+	@Query(value="select * from user where us_is_approved=1 and us_vendor_id = 0 ",nativeQuery=true)
+	List<User> getApproved();
+	
 }
