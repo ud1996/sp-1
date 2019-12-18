@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
       'gender':new FormControl(null,Validators.required),
       'contact':new FormControl(null,[Validators.required,Validators.minLength(10),Validators.maxLength(10)]),
       'age':new FormControl(null,[Validators.required,Validators.min(18),Validators.max(120)]),
-      'vendorId':new FormControl(null),
+      'vendorId':new FormControl(0),
       'role':new FormControl('User')
     });
    /*  if(this.signupForm.get('role').value=="admin"){
@@ -53,7 +53,6 @@ export class SignupComponent implements OnInit {
 
   onSignup(){
     console.log("insignup");
-    console.log(this.signupForm.get('email').value);
     
     this.formSubmitted = true;
     let email = this.signupForm.get('email').value;
@@ -115,8 +114,14 @@ onSignUp(){
   let age=this.signupForm.get('age').value;
   let contact=this.signupForm.get('contact').value;
   let gender=this.signupForm.get('gender').value;
-
-  this.user = {email:email,firstName:firstname,lastName:lastname,password:password,age:age,gender:gender,contactNumber:contact,isApproved:null,vendorId:null};
+  let role = this.signupForm.get('role').value;
+  console.log(role);
+  let vendorId;
+  if(role==='User')
+    vendorId = 0;
+  else
+    vendorId = this.signupForm.get('vendorId').value;
+  this.user = {email:email,firstName:firstname,lastName:lastname,password:password,age:age,gender:gender,contactNumber:contact,isApproved:null,vendorId:vendorId};
   this.userAlreadyExists=false;
   this.userService.authentcate(this.user).subscribe((data)=>{
       console.log(data);

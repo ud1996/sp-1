@@ -31,7 +31,7 @@ export class BookingService {
         deleteBooking(bookingId: number) {
                 let headers = new HttpHeaders();
                 headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
-                return this.httpClient.delete<any>(`http://localhost:8000/users/booking/${bookingId}`, { headers });
+                return this.httpClient.delete<any>(`http://localhost:8000/user/booking/${bookingId}`, { headers });
         }
 }
 

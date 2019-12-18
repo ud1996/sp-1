@@ -8,6 +8,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/Model/user.model';
 import { DatePipe, getLocaleDayNames } from '@angular/common';
 import { Route } from '@angular/compiler/src/core';
+import { UserService } from 'src/app/Services/user.service';
+import { Booking } from 'src/app/Model/booking.model';
 
 
 
@@ -27,16 +29,26 @@ export class ConfirmBookingComponent implements OnInit {
   startDate:Date;
   days:any;
   bookingForm:FormGroup;
-  user:User;
+  user:User = null;
   d:any;
+  showTotal:boolean=false;
   confirm:boolean = false;
-  constructor(private authService:AuthenticationService,private bookingService:BookingService,private  route:ActivatedRoute, private vehicleService:VehicleService,private datePipe: DatePipe,private rout:Router) {
+  email: string;
+  showWalletError: boolean = false;
+  showButton:boolean = false;
+  amount:any;
+  hasInput:boolean = false;
+  walletAmount:any;
+  status: string;
+  constructor(private userService:UserService, private authService:AuthenticationService,private bookingService:BookingService,private  route:ActivatedRoute, private vehicleService:VehicleService,private datePipe: DatePipe,private rout:Router) {
 
     
   }
 
   ngOnInit() {
-    console.log("rerere");
+   
+    
+  
     
     this.route.params.subscribe((params:Params)=>{
       this.vehicleId = params['veId'];
@@ -53,32 +65,82 @@ export class ConfirmBookingComponent implements OnInit {
       
     })
 
+    this.email = this.authService.userAuthenticated.email;
+    console.log(this.email);
+    
+    this.userService.getUser(this.email).subscribe((us:User)=>{
+      this.user = us;
+      this.walletAmount = this.user.wallet.amount;
+    })
     this.bookingForm = new FormGroup({
       bookingFrom :  new FormControl(null,Validators.required),
       bookingUpto: new FormControl(null,Validators.required)
     })
+
     
     
   }
 
   setTotalAmount(totalAmount:any){
     this.bookingService.totalAmount = totalAmount;
+  
   }
 
   confirmBooking(){
     console.log("kk");
-      this.user = this.authService.userAuthenticated;
+     
       console.log(this.bookingForm.get('bookingFrom').value)
       this.startDate = this.bookingForm.get('bookingFrom').value;
       this.days = this.bookingForm.get('bookingUpto').value;
       this.totalAmount = this.v.price * this.days;
       this.setTotalAmount(this.totalAmount);
-      this.bookingService.confirmBooking(this.user.email,this.vehicleId,this.startDate,this.days).subscribe();
-      this.rout.navigate(['/wallet']);
+      console.log(this.user.wallet.amount);
+      console.log(this.walletAmount);
+      
+     if(this.walletAmount >= this.totalAmount){
+        this.bookingService.confirmBooking(this.user.email,this.vehicleId,this.startDate,this.days).subscribe((book:Booking)=>{
+          this.status = book.status;
+          console.log(this.status);
+        
+          
+        });
+      //  this.rout.navigate(['/booking']);
+     }
+    else{
+        this.showWalletError = true;
+        this.showButton = true;
+    }
+     /// 
   }
 
   onConfirm(){
     this.confirm = true;
   }
+
+  onInput(){
+    this.hasInput = true;
+    this.showTotal = true;
+    
+    this.totalAmount = this.v.price * this.bookingForm.get('bookingUpto').value;
+   
+    if(this.walletAmount >= this.totalAmount){
+      this.showButton = false;
+    }
+    else
+      this.showButton = true;
+  
+  }
+
+  redirect(){
+    this.rout.navigate(['/wallet'])
+  }
+
+  addMoney(){
+
+    this.userService.updateWalletBalance(this.email,this.amount).subscribe();
+    this.walletAmount += this.amount;
+    this.showButton = false;
+  }
+
 
 }

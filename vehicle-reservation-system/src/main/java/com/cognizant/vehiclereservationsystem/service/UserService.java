@@ -2,6 +2,7 @@ package com.cognizant.vehiclereservationsystem.service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -110,7 +111,7 @@ public class UserService {
 		}
 		if (wallet != null) {
 			if (type.equals("debit")) {
-				wallet.setAmount(0);
+				wallet.setAmount(wallet.getAmount()-amount);
 			} else if (type.equals("credit")) {
 				wallet.setAmount(wallet.getAmount() + amount);
 			}
@@ -262,13 +263,26 @@ public class UserService {
 		return user.getWallet();
 	}
 	
+	@Transactional
 	public void updateWalletBalance(String email,double amount) {
+		System.out.println("jhjhg");
 		User user = userRepository.findByEmail(email);
 		Wallet wallet = user.getWallet();
 		wallet.setAmount(wallet.getAmount()+amount);
 		user.setWallet(wallet);
-		userRepository.save(user);
+		Transaction transaction = new Transaction(amount,"credit");
+		Set<Transaction> transactionSet;
+		transactionSet = user.getTransaction();
+		transactionSet.add(transaction);
+		user.setTransaction(transactionSet);
+		for(Transaction tra: transactionSet) {
+			System.out.println(tra);
+		}
 		walletRepository.save(wallet);
+		
+		
+		
+		userRepository.save(user);
 	}
 
 	

@@ -1,65 +1,81 @@
+<!-- 
+<div class="col-6 col-md-6 col-sm-6">
 
+    <div class="card mt-5">
+        <div class="row">
+            <div class="col-12">
+                <img [src]="booking.vehicle.imageUrl" class="card-img-top rounded">
 
-        
-            <div class="container-fluid mt-3">
-                <div class="row">
-                    <div class="col-4 col-md-6 col-sm-12">
-                        <div class="card">
-                            <img [src]="booking.vehicle.imageUrl" class="card-img-top rounded imgsize">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4">
-                                        {{booking.vehicle.veName}}
-                                    </div>
-                                </div>
-    
-                                <div class="row">
-                                    <div class="col-4">
-                                        Booking From:
-                                    </div>
-    
-                                    <div class="col-4">
-                                        {{booking.startDate}}
-                                    </div>
-                                </div>
-    
-                                <div class="row">
-                                    <div class="col-4">
-                                        Booking Upto:
-                                    </div>
-    
-                                    <div class="col-4">
-                                        {{booking.endDate}}
-                                    </div>
-                                </div>
-    
-                                <div class="row">
-                                    <div class="col-4">
-                                        Fare:
-                                    </div>
-    
-                                    <div class="col-4">
-                                        {{booking.vehicle.price}}
-                                    </div>
-                                </div>
-    
-                                <div class="row">
-                                    <div class="col-4">
-                                        Ride Status
-                                    </div>
-    
-                                    <div class="col-4">
-                                        <span class="badge" [ngClass]="{'badge-success':booking.status === 'active', 'badge-danger':booking.status === 'cancel'}">{{booking.status}}</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-danger btn-sm flex mt-3">Cancel</button>
-                            </div>
-    
-                        </div>
-    
-                    </div>
-
-                   
-                </div>
             </div>
-      
+        </div>
+
+        <div class="col-8">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Model</th>
+                        <td>{{booking.vehicle.veName}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Insuarance Valid</th>
+                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
+                    </tr>
+
+                    <tr>
+                        <th>Type</th>
+                        <td>{{booking.vehicle.veType}}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Last Service Date</th>
+                        <td>{{booking.vehicle.velastServiceDate | date}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Ride Status
+            </div>
+
+            <div class="col-4">
+                <span class="badge"
+                    [ngClass]="{'badge-success':booking.status === 'active', 'badge-danger':booking.status === 'cancel'}">{{booking.status}}</span>
+            </div>
+        </div>
+
+        <button class="btn btn-danger btn-sm flex mt-3 " (click)="onDelete(booking.bookingId)">Delete</button>
+
+    </div>
+
+
+</div> -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+
+            <div class="row">
+                <table class="table">
+                <tbody>
+                    <tr>
+                        <td> <img [src]="booking.vehicle.imageUrl" class="card-img-top rounded"></td>
+                        <td>{{booking.vehicle.veName}}</td>
+                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
+                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
+                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
+                    </tr>
+
+                </tbody>
+
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

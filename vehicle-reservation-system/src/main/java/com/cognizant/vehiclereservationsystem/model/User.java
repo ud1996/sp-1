@@ -59,9 +59,11 @@ public class User {
 	Set<Role>roleList;
 	
 	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+	
 	Wallet wallet;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	
 	Set<Transaction> transaction;
 	
 	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)

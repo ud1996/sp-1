@@ -40,6 +40,7 @@ public class UserController {
 	public void SignUp(@RequestBody @Valid User user) throws UserAlreadyExistsException {
 		
 		LOGGER.info("signup");
+		System.out.println(user);
 		appUserDetailService.signUp(user);
 	}
 	

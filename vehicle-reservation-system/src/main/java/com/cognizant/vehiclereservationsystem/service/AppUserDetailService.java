@@ -58,6 +58,7 @@ public class AppUserDetailService implements UserDetailsService {
 			LOGGER.info("signUp user");
 			if(newUser.getVendorId() == 0) {
 				 role = roleRepository.findById((long) 2).get();
+				
 			}
 			else {
 			 role = roleRepository.findById((long) 1).get();

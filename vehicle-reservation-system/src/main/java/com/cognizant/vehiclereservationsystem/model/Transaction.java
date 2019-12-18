@@ -46,6 +46,14 @@ public class Transaction {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public Transaction(double amount,String type ) {
+		super();
+		this.type = type;
+		this.amount = amount;
+	}
+
 
 	public Transaction(long transaction_id, String type, double amount) {
 		super();

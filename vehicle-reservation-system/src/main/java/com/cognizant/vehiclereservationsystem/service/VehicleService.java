@@ -57,6 +57,7 @@ public class VehicleService {
 	@Transactional
 	public void deleteVehicle(long vehicleId) {
 		Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
+		System.out.println(vehicle);
 		vehicleRepository.delete(vehicle);
 	}
 	

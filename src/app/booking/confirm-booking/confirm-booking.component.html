@@ -68,7 +68,13 @@
 
     </div>
 </div> -->
-
+    <div class="alert alert-danger my-4" *ngIf="showButton">
+        <div class="row">
+            <div class="col-6">
+                Low Balance.Recharge First
+            </div>
+        </div>
+    </div>
         <div class="row mt-5 abc container-fluid mb-5">
             <div class="col-6 col-md-6 col-sm-6">
 
@@ -135,19 +141,85 @@
                                     Booking for days
                                 </div>
                                 <div class="col-6 float-right">
-                                    <input type="text" class="form-control" formControlName="bookingUpto" id="daysBooked">
+                                    <input type="text" class="form-control" formControlName="bookingUpto" (keyup)="onKey()"(input)="onInput()" id="daysBooked">
                                 </div>
                             </div>
-                           
-                            <input type="submit" class="btn btn-success d-flex" id="save" value="confirm">
+                            <div class="row mt-3" *ngIf="showTotal">
+                                <div class="col-6">
+                                    Total Amount:
+                                </div>
+                                <div class="col-6">
+                                    {{totalAmount}}
+                                </div>
+                                
+        
+                            </div>
+                            <div class="row">
+                                <div class="col-6" *ngIf="!showButton">
+                                    <input type="submit" class="btn btn-success d-flex" id="save" value="confirm">
+                                </div>
+                                <div class="col-6" *ngIf="showButton">
+                                    <button class="btn btn-danger d-flex" id="save"  data-toggle="modal" data-target="#exampleModal">Add Money</button>
+                                </div>
+                            </div>
+                            
                         </form>
+                        
                     </div>
                    
                 </div>
-               
+                <!-- <div class="card" *ngIf="showButton">
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Wallet Balance</th>
+                                    <td>
+                                        {{user.wallet.amount}}
+                                    </td>
+                                </tr>
+        
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add Money</button>
+                    </div>
+                </div> -->
             </div>
             
         </div>
   
 
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    Amount: 
+                                </div>
+                                <div class="col-6">
+                                    <form>
+                                        <input type="text" name="amount" id="amount" [(ngModel)]="amount">
+                                    </form>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" (click)="addMoney()" data-dismiss="modal">Add</button>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+       

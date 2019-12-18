@@ -17,6 +17,8 @@ export class VehicleItemComponent implements OnInit {
 
   ngOnInit() {
 
+    
+
     console.log("inthe"+this.vehicle);
   }
 
