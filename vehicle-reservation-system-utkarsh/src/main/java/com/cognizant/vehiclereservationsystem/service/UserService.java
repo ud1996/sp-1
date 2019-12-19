@@ -96,7 +96,7 @@ public class UserService {
 		Wallet wallet = user.getWallet();
 		if (type.equals("debit")) {
 			if (wallet != null) {
-				amount = amountTotal - wallet.getAmount();
+				wallet.setAmount(wallet.getAmount()-amount);
 			} else {
 				amount = amountTotal;
 			}
@@ -133,6 +133,7 @@ public class UserService {
 
 	public Map<String, String> bookVehicle(String email, long vehicleId, LocalDate startDate, int numberOfDays) {
 
+		LOGGER.debug("dfdssd");
 		User user = getUser(email);
 		Map<String, String> response = new HashMap<String, String>();
 		Set<Transaction> transactionList = user.getTransaction();
@@ -150,7 +151,7 @@ public class UserService {
 		Wallet wallet = user.getWallet();
 
 		LocalDate currentDate = LocalDate.now();
-
+		System.out.println("bbookkk");
 		Booking booking = new Booking(user, vehicle, startDate, startDate.plusDays(numberOfDays), currentDate,
 				"pending payment");
 
@@ -266,8 +267,14 @@ public class UserService {
 	@Transactional
 	public void updateWalletBalance(String email,double amount) {
 		System.out.println("jhjhg");
+		Wallet wallet;
 		User user = userRepository.findByEmail(email);
-		Wallet wallet = user.getWallet();
+		if(user.getWallet() == null) {
+			System.out.println("in addmoney");
+			wallet = new Wallet(0,user);
+			wallet.setAmount(0);
+		}
+		wallet = user.getWallet();
 		wallet.setAmount(wallet.getAmount()+amount);
 		user.setWallet(wallet);
 		Transaction transaction = new Transaction(amount,"credit");
@@ -279,7 +286,7 @@ public class UserService {
 			System.out.println(tra);
 		}
 		walletRepository.save(wallet);
-		
+		transactionRepository.save(transaction);
 		
 		
 		userRepository.save(user);

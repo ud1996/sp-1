@@ -9,10 +9,10 @@ export interface User{
     password?:string;
     gender?:string;
     vendorId?: number;
-    isApproved?:boolean;
+    approved?:boolean;
     age?:number;
     contactNumber?:number;
     wallet ?: Wallet;
-    transaction ?:Transaction;
+    transaction ?:Transaction[];
     accessToken?:string;
 }

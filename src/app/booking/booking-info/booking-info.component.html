@@ -1,81 +1,50 @@
-<!-- 
-<div class="col-6 col-md-6 col-sm-6">
-
-    <div class="card mt-5">
-        <div class="row">
-            <div class="col-12">
-                <img [src]="booking.vehicle.imageUrl" class="card-img-top rounded">
-
-            </div>
-        </div>
-
-        <div class="col-8">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Model</th>
-                        <td>{{booking.vehicle.veName}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Insuarance Valid</th>
-                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
-                    </tr>
-
-                    <tr>
-                        <th>Type</th>
-                        <td>{{booking.vehicle.veType}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Last Service Date</th>
-                        <td>{{booking.vehicle.velastServiceDate | date}}</td>
-                    </tr>
-                </tbody>
-
-            </table>
-        </div>
-
-        <div class="row">
-            <div class="col-4">
-                Ride Status
-            </div>
-
-            <div class="col-4">
-                <span class="badge"
-                    [ngClass]="{'badge-success':booking.status === 'active', 'badge-danger':booking.status === 'cancel'}">{{booking.status}}</span>
-            </div>
-        </div>
-
-        <button class="btn btn-danger btn-sm flex mt-3 " (click)="onDelete(booking.bookingId)">Delete</button>
-
-    </div>
-
-
-</div> -->
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-
-
-            <div class="row">
-                <table class="table">
-                <tbody>
-                    <tr>
-                        <td> <img [src]="booking.vehicle.imageUrl" class="card-img-top rounded"></td>
-                        <td>{{booking.vehicle.veName}}</td>
-                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
-                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
-                        <td>{{booking.vehicle.veInsuranceExpiryDate | date}} </td>
-                    </tr>
-
-                </tbody>
-
-                </table>
-            </div>
-
-
-
+    <div class="row mt-5">
+      <div class="card">
+        <div class="card-title ml-4 mt-4">
+          <h2>Bookings</h2>
         </div>
+        <div class="card-body">
+          <div class="alert alert-secondary" *ngIf="length==0; else bookingItems">
+            You dont have any bookings.
+          </div>
+          <ng-template #bookingItems>
+            <table class="table" #bookingItems>
+              <thead>
+                <tr>
+                  <th>Booking Id</th>
+                  <th>Vehicle Model</th>
+                  <th>Vehicle Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Booking Date</th>
+                  <th>Status</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let booking of sortedBook">
+                <tr>
+                  <td>{{booking.bookingId}}</td>
+                  <td>{{booking.vehicle.veName}}</td>
+                  <td>{{booking.vehicle.veType}}</td>
+                  <td>{{booking.startDate}}</td>
+                  <td>{{booking.endDate}}</td>
+                  <td>{{booking.bookingDate}}</td>
+                  <td>{{booking.status}}</td>
+                  <td *ngIf="booking.status=='booked'"><button class="btn btn-danger" data-toggle="modal"
+                      data-target="myModal"><i class="material-icons">
+                        cancel
+                      </i></button></td>
+                  <td *ngIf="booking.status=='active'"><button class="btn btn-primary"
+                      (click)="onDelete(booking.bookingId)">End
+                    </button></td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  

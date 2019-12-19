@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
     let age = this.signupForm.get('age').value;
     let contactNumber = this.signupForm.get('contactNumber').value;
     console.log("ddddnup2");
-    this.user = {email:email,firstName:firstName,lastName:lastName,password:password,gender:"male",vendorId:vendorId,age:age,contactNumber:contactNumber,isApproved:false};
+    this.user = {email:email,firstName:firstName,lastName:lastName,password:password,gender:"male",vendorId:vendorId,age:age,contactNumber:contactNumber,approved:false};
     console.log(this.user);
     
     this.userService.authentcate(this.user).subscribe((data)=>{
@@ -121,7 +121,7 @@ onSignUp(){
     vendorId = 0;
   else
     vendorId = this.signupForm.get('vendorId').value;
-  this.user = {email:email,firstName:firstname,lastName:lastname,password:password,age:age,gender:gender,contactNumber:contact,isApproved:null,vendorId:vendorId};
+  this.user = {email:email,firstName:firstname,lastName:lastname,password:password,age:age,gender:gender,contactNumber:contact,approved:null,vendorId:vendorId};
   this.userAlreadyExists=false;
   this.userService.authentcate(this.user).subscribe((data)=>{
       console.log(data);

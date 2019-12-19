@@ -13,6 +13,7 @@ import { UserService } from 'src/app/Services/user.service';
 export class LoginComponent implements OnInit {
   user:User=null;
   error:string;
+  approved: boolean = true;
   
   
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthenticationService,private userService:UserService) { }
@@ -40,11 +41,29 @@ export class LoginComponent implements OnInit {
           
           this.authService.isAdmin = false;
           this.authService.userAuthenticated = {email:username,password:password}
+          this.userService.getUser(username).subscribe((us:User)=>{
+            console.log(us);
+            this.user = us;
+            this.approved = this.user.approved;
+            console.log("s"+this.user.approved);
+            
+            console.log(this.approved);
+            
+          })
         }
         else{
           console.log("isAdmin1");
           this.authService.isAdmin = true;
           this.authService.userAuthenticated = {email:username,password:password};
+          this.userService.getUser(username).subscribe((us:User)=>{
+            console.log(us);
+            this.user = us;
+            this.approved = this.user.approved;
+            console.log("s"+this.user.approved);
+            
+            console.log(this.approved);
+            
+          })
         }
 
         this.authService.loggedIn = true;

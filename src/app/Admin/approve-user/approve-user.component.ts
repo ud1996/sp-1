@@ -47,6 +47,7 @@ export class ApproveUserComponent implements OnInit {
       this.userService.approveUser(userId).subscribe(()=>{
           console.log("subs");
           this.fetchUser();
+          this.ngOnInit();
           
       });
     
@@ -62,7 +63,7 @@ onDeclining(userId:number){
     this.userService.declineUser(userId).subscribe(()=>{
         console.log("subs");
         this.fetchUser();
-        
+        this.ngOnInit();
     });
     
    

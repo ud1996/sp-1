@@ -3,6 +3,8 @@ import { Vehicle } from 'src/app/Model/vehicle.model';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { Router } from '@angular/router';
 import { VehicleService } from 'src/app/Services/vehicle.service';
+import { BookingService } from 'src/app/Services/bookingService.service';
+import { Booking } from 'src/app/Model/booking.model';
 
 @Component({
   selector: 'app-vehicle-item',
@@ -13,12 +15,12 @@ export class VehicleItemComponent implements OnInit {
 
   @Input() vehicle: Vehicle[];
   bookedVehicle:Vehicle;
-  constructor(private authService: AuthenticationService, private router:Router,private vehicleService:VehicleService) { }
+ 
+  constructor(private authService: AuthenticationService, private router:Router,private vehicleService:VehicleService,private bookingService:BookingService) { }
 
   ngOnInit() {
 
     
-
     console.log("inthe"+this.vehicle);
   }
 

@@ -33,5 +33,14 @@ export class BookingService {
                 headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
                 return this.httpClient.delete<any>(`http://localhost:8000/user/booking/${bookingId}`, { headers });
         }
+
+        checkBookingStatus(email:string){
+                let headers =new  HttpHeaders();
+                headers.set('Authorization','Bearer '+this.authService.accessToken);
+                console.log( this.httpClient.get<string>(`http://localhost:8000/user/check/${email}`,{headers}));
+                
+                return this.httpClient.get<string>(`http://localhost:8000/user/check/${email}`,{headers})
+
+        }
 }
 

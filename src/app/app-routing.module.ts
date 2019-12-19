@@ -10,19 +10,23 @@ import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
 import { BookingListComponent } from './booking/booking-list/booking-list.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { BookingInfoComponent } from './booking/booking-info/booking-info.component';
+import { AuthGuardService } from './Services/auth-guard.service';
+import { UserComponent } from './user/user.component';
 
 
 const routes: Routes = [
   {path:'',component:VehicleListComponent},
   {path:'signup',component:SignupComponent},
   {path:'login', component:LoginComponent},
-  {path:'userapprove', component:ApproveUserComponent},
-  {path:'edit/:veId',component:VehicleEditComponent},
-  {path:'confirm/:veId',component:ConfirmBookingComponent},
-  {path:'addVehicle',component:AddVehicleComponent},
-  {path:'booking',component:BookingListComponent},
-  {path:'wallet',component:WalletComponent},
-  {path:'transactions',component:TransactionsComponent}
+  {path:'userapprove', component:ApproveUserComponent,canActivate:[AuthGuardService]},
+  {path:'edit/:veId',component:VehicleEditComponent,canActivate:[AuthGuardService]},
+  {path:'confirm/:veId',component:ConfirmBookingComponent,canActivate:[AuthGuardService]},
+  {path:'addVehicle',component:AddVehicleComponent,canActivate:[AuthGuardService]},
+  {path:'booking',component:BookingInfoComponent,canActivate:[AuthGuardService]},
+  {path:'wallet',component:WalletComponent,canActivate:[AuthGuardService]},
+  {path:'transactions',component:TransactionsComponent,canActivate:[AuthGuardService]},
+  {path:'profile',component:UserComponent,canActivate:[AuthGuardService]},
 ];
 
 @NgModule({

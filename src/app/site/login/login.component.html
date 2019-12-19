@@ -1,5 +1,6 @@
 <div class="row justify-content-center mt-4">
     <div class="col-12 col-md-4 col-lg-3">
+      <span class="alert alert-danger" *ngIf="!approved">Sorry You are Still not approved.</span>
       <div class="card">
         <div class="card-body">
           <div class="page-title">Login</div>
@@ -24,7 +25,7 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <input type="submit" class="btn btn-primary background" [disabled]="loginForm.invalid" name="login"
+                <input type="submit" class="btn btn-primary background" [disabled]="loginForm.invalid" [disabled]="!approved" name="login"
                   value="Login">
               </div>
               <div class="col-6 d-felx justify-cointent-end">

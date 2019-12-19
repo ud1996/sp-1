@@ -60,8 +60,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/booking/{email}")
-	public Set<Booking> getBooking(@PathVariable String mail){
-		return userService.findBookingByUser(mail);
+	public Set<Booking> getBooking(@PathVariable String email){
+		return userService.findBookingByUser(email);
 	}
 	
 	@GetMapping("/transactions/{email}")

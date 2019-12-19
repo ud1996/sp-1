@@ -20,126 +20,150 @@ import { Booking } from 'src/app/Model/booking.model';
   styleUrls: ['./confirm-booking.component.css']
 })
 export class ConfirmBookingComponent implements OnInit {
-  isData:boolean=false;
-  totalAmount:number;
-  vehicleId:number;
-  name:string;
-  imageUrl:string;
-  v:Vehicle=null;
-  startDate:Date;
-  days:any;
-  bookingForm:FormGroup;
-  user:User = null;
-  d:any;
-  showTotal:boolean=false;
-  confirm:boolean = false;
+  isData: boolean = false;
+  totalAmount: number;
+  vehicleId: number;
+  name: string;
+  imageUrl: string;
+  v: Vehicle = null;
+  startDate: Date;
+  days: any;
+  bookingForm: FormGroup;
+  user: User = null;
+  d: any;
+  showTotal: boolean = false;
+  confirm: boolean = false;
   email: string;
   showWalletError: boolean = false;
-  showButton:boolean = false;
-  amount:any;
-  hasInput:boolean = false;
-  walletAmount:any;
+  showButton: boolean = false;
+  amount: any = 0;
+  hasInput: boolean = false;
+  walletAmount: any = 0;
   status: string;
-  constructor(private userService:UserService, private authService:AuthenticationService,private bookingService:BookingService,private  route:ActivatedRoute, private vehicleService:VehicleService,private datePipe: DatePipe,private rout:Router) {
+  bookingSuccess: boolean = false;
+  unsuccessfullStatus:boolean = false;
+  selectedDate:Date;
+  todaysDate:string;
+ 
+  constructor(private userService: UserService, private authService: AuthenticationService, private bookingService: BookingService, private route: ActivatedRoute, private vehicleService: VehicleService, private datePipe: DatePipe, private rout: Router) {
 
-    
+
   }
 
   ngOnInit() {
-   
-    
-  
-    
-    this.route.params.subscribe((params:Params)=>{
+
+
+
+    this.todaysDate = this.datePipe.transform(new Date(),'yyyy-MM-dd');
+    this.route.params.subscribe((params: Params) => {
       this.vehicleId = params['veId'];
     });
 
     console.log(this.vehicleId);
 
-    this.vehicleService.getVehicle(this.vehicleId).subscribe((ve:Vehicle)=>{
-      
-      this.v= ve;
-      this.imageUrl=this.v.imageUrl;
-      this.name=this.v.veName;
+    this.vehicleService.getVehicle(this.vehicleId).subscribe((ve: Vehicle) => {
+
+      this.v = ve;
+      this.imageUrl = this.v.imageUrl;
+      this.name = this.v.veName;
       console.log(this.v);
-      
+
     })
 
     this.email = this.authService.userAuthenticated.email;
     console.log(this.email);
-    
-    this.userService.getUser(this.email).subscribe((us:User)=>{
+
+    this.userService.getUser(this.email).subscribe((us: User) => {
       this.user = us;
-      this.walletAmount = this.user.wallet.amount;
+      if (this.user.wallet != null)
+        {this.walletAmount = this.user.wallet.amount;}
+      else{
+        this.walletAmount = 0;
+        this.user.wallet.amount=0;
+      }
     })
     this.bookingForm = new FormGroup({
-      bookingFrom :  new FormControl(null,Validators.required),
-      bookingUpto: new FormControl(null,Validators.required)
+      bookingFrom: new FormControl(null, Validators.required),
+      bookingUpto: new FormControl(null, Validators.required)
     })
 
-    
-    
+ 
+
   }
 
-  setTotalAmount(totalAmount:any){
+  setTotalAmount(totalAmount: any) {
     this.bookingService.totalAmount = totalAmount;
-  
+
   }
 
-  confirmBooking(){
+  confirmBooking() {
     console.log("kk");
-     
-      console.log(this.bookingForm.get('bookingFrom').value)
-      this.startDate = this.bookingForm.get('bookingFrom').value;
-      this.days = this.bookingForm.get('bookingUpto').value;
-      this.totalAmount = this.v.price * this.days;
-      this.setTotalAmount(this.totalAmount);
-      console.log(this.user.wallet.amount);
-      console.log(this.walletAmount);
+
+    console.log(this.bookingForm.get('bookingFrom').value)
+    this.startDate = this.bookingForm.get('bookingFrom').value;
+    this.days = this.bookingForm.get('bookingUpto').value;
+    this.totalAmount = this.v.price * this.days;
+    this.setTotalAmount(this.totalAmount);
+    
+    console.log(this.walletAmount);
+
+    if (this.walletAmount >= this.totalAmount) {
       
-     if(this.walletAmount >= this.totalAmount){
-        this.bookingService.confirmBooking(this.user.email,this.vehicleId,this.startDate,this.days).subscribe((book:Booking)=>{
-          this.status = book.status;
-          console.log(this.status);
-        
+        this.bookingService.confirmBooking(this.email,this.vehicleId,this.startDate,this.days).subscribe((status:any)=>{
+          console.log(status.status);
+          if(status.status != 'unsuccessfull')
+            this.bookingSuccess = true;
+          else{
+            this.unsuccessfullStatus = true;
+          }
+          console.log("confirm booking...");
+          
           
         });
-      //  this.rout.navigate(['/booking']);
-     }
-    else{
-        this.showWalletError = true;
-        this.showButton = true;
+        setTimeout(()=>{
+          this.rout.navigate(['/']);
+        },3000);
+       // this.rout.navigate(['/booking']);
     }
-     /// 
+    else {
+      this.showWalletError = true;
+      this.showButton = true;
+    }
+    /// 
   }
 
-  onConfirm(){
+  onConfirm() {
     this.confirm = true;
   }
 
-  onInput(){
+  onInput() {
     this.hasInput = true;
     this.showTotal = true;
-    
+
     this.totalAmount = this.v.price * this.bookingForm.get('bookingUpto').value;
    
-    if(this.walletAmount >= this.totalAmount){
+
+    if (this.walletAmount >= this.totalAmount) {
       this.showButton = false;
     }
     else
       this.showButton = true;
-  
+
   }
 
-  redirect(){
+  
+
+  redirect() {
     this.rout.navigate(['/wallet'])
   }
 
-  addMoney(){
+  addMoney() {
 
-    this.userService.updateWalletBalance(this.email,this.amount).subscribe();
-    this.walletAmount += this.amount;
-    this.showButton = false;
+    if (this.amount != 0) {
+      this.userService.updateWalletBalance(this.email, this.amount).subscribe();
+      this.walletAmount += this.amount;
+      this.showButton = false;
+    }
   }
 
 

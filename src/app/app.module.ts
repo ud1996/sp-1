@@ -20,6 +20,7 @@ import { AddVehicleComponent } from './Admin/add-vehicle/add-vehicle.component';
 import { DatePipe } from '@angular/common';
 import { WalletComponent } from './wallet/wallet.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -37,14 +38,16 @@ import { TransactionsComponent } from './transactions/transactions.component';
     ConfirmBookingComponent,
     AddVehicleComponent,
     WalletComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+  
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

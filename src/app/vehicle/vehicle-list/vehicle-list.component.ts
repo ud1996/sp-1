@@ -3,6 +3,8 @@ import { VehicleService } from 'src/app/Services/vehicle.service';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { Router } from '@angular/router';
 import { Vehicle } from 'src/app/Model/vehicle.model';
+import { BookingService } from 'src/app/Services/bookingService.service';
+import { Booking } from 'src/app/Model/booking.model';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -13,7 +15,8 @@ export class VehicleListComponent implements OnInit {
 
   vehicles:Vehicle[];
   tempVehicle:Vehicle[];
-  constructor(private vehicleService:VehicleService,private authService:AuthenticationService,private router:Router) { }
+  booking:Booking = null;
+  constructor(private vehicleService:VehicleService,private authService:AuthenticationService,private router:Router,private bookingService:BookingService) { }
 
   ngOnInit() {
     this.vehicleService.getVehicles().subscribe((vehicle:Vehicle[])=>{
@@ -34,6 +37,8 @@ export class VehicleListComponent implements OnInit {
         this.vehicles = [...this.tempVehicle];
       }
     })
+
+    
   }
  
 
