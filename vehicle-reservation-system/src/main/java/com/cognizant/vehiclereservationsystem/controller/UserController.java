@@ -118,4 +118,14 @@ public class UserController {
 	public List<Coupon> getCoupon() {
 		return userService.getCoupon();
 	}
+		@PutMapping("/reset/{email}")
+	public boolean resetPassword(@RequestBody String password, @PathVariable String email) {
+		return appUserDetailService.resetPassword(password,email);
+	}
+	
+	@GetMapping("/numberValid/{email}/{number}")
+	public boolean numberValid(@PathVariable String email,@PathVariable long number) {
+		return (userService.getUser(email).getContactNumber() == number)? true : false;
+	}
+		
 }
