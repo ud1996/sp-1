@@ -76,6 +76,20 @@ public class AppUserDetailService implements UserDetailsService {
 				System.out.println(newUser.isApproved());
 				System.out.println(newUser.getVendorId());
 			}
+			
+			
+			Notification notificationUser = new Notification("Welcome to Vehicle reservation system.");
+			notificationUser.setUser(user);
+
+			notificationRepository.save(notificationUser);
+
+			List<User> adminList = userRepository.findByIsApprovedAndVendorIdNot(true, 0);
+			for (User admin : adminList) {
+				Notification notification = new Notification(newUser.getEmail() +" is waiting for your approval !!");
+				notification.setUser(admin);
+				notificationRepository.save(notification);			
+			}
+			
 			userRepository.save(newUser);
 			LOGGER.info("AppUserDetailService encoder");
 		} else
@@ -86,6 +100,17 @@ public class AppUserDetailService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		LOGGER.info("password encoder");
 		return new BCryptPasswordEncoder();
+	}
+	public boolean resetPassword(String password, String email) {
+
+		try{
+			User user = userRepository.findByEmail(email);
+			user.setPassword(passwordEncoder().encode(password));
+			userRepository.save(user);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 }
