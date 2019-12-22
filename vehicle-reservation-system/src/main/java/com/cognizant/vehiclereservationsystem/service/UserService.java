@@ -323,4 +323,83 @@ public class UserService {
 	public List<Coupon>getCoupon(){
 		return couponRepository.findAll();
 	}
+	public boolean deleteNotification(long notificationId) {
+		try {
+			Notification notification = notificationRepository.findById(notificationId).get();
+			notificationRepository.delete(notification);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+		public boolean clearNotifications(String email) {
+		try {
+			User user = userRepository.findByEmail(email);
+			List<Notification> notifications = notificationRepository.findByUser(user);
+			for (Notification notification : notifications) {
+				notificationRepository.delete(notification);
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public void notifyForInsuranceAndService(String email) {
+		List<Vehicle> vehicleList = vehicleRepository.findAll();
+
+		for (Vehicle vehicle : vehicleList) {
+			boolean notify = false;
+			boolean notifyService = false;
+
+			long intervalDays = ChronoUnit.DAYS.between(LocalDate.now(), vehicle.getVeInsuranceExpiryDate());
+			long intervalDaysService = ChronoUnit.DAYS.between(LocalDate.now(), vehicle.getVeServiceDueDate());
+
+			String message = "";
+			String messageService = "";
+
+			if (intervalDaysService < 0) {
+				messageService = "has passed";
+				notifyService = true;
+			} else if (intervalDaysService == 0) {
+				messageService = "is today";
+				notifyService = true;
+			} else if (intervalDaysService == 1) {
+				messageService = "is tomorrow";
+				notifyService = true;
+			} else if (intervalDaysService <= 15) {
+				messageService = "due in" + intervalDays + " days.";
+				notifyService = true;
+			}
+
+			if (intervalDays < 0) {
+				message = "has expired";
+				notify = true;
+			} else if (intervalDays == 0) {
+				message = "expires today";
+				notify = true;
+			} else if (intervalDays == 1) {
+				message = "expires tomorrow";
+				notify = true;
+			} else if (intervalDays <= 15) {
+				message = "expires in" + intervalDays + " days.";
+				notify = true;
+			}
+
+			User admin = userRepository.findByEmail(email);
+				if (notify) {
+					Notification notification = new Notification("Insurance for " + vehicle.getVeName() + " (vehicleId: "
+							+ vehicle.getVeId() + ") " + message);
+					notification.setUser(admin);
+					notificationRepository.save(notification);
+				}
+				if (notifyService) {
+					Notification notification = new Notification("Service for " + vehicle.getVeName() + " (vehicleId: "
+							+ vehicle.getVeId() + ") " + messageService);
+					notification.setUser(admin);
+					notificationRepository.save(notification);
+				}
+
+		}
+	}
 }
