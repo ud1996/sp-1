@@ -127,5 +127,14 @@ public class UserController {
 	public boolean numberValid(@PathVariable String email,@PathVariable long number) {
 		return (userService.getUser(email).getContactNumber() == number)? true : false;
 	}
-		
+			@DeleteMapping("/notification/{notificationId}")
+	public boolean deleteNotification(@PathVariable long notificationId) {
+		return userService.deleteNotification(notificationId);
+	}
+	
+	@DeleteMapping("/notification-bulk/{email}")
+	public boolean clearNotifications(@PathVariable String email) {
+		return userService.clearNotifications(email);
+	}
+
 }
